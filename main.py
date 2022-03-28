@@ -58,7 +58,7 @@ def prompts():
 #prompts()
 
 def colorDetection():
-    my_car = ColorDetect('photos/peppers.JPG')
+    my_car = ColorDetect('photos/blue shirt.jpg')
     monochromatic, gray, segmented, mask = my_car.get_segmented_image(lower_bound=(0, 70, 0), upper_bound=(80, 255, 255))
     cv2.imshow('Segmented', segmented)
     cv2.imshow('monochromatic', monochromatic)
