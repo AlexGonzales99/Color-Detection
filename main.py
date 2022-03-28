@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from colordetect import ColorDetect
+#https://github.com/offsouza/color-segmentation.git
 
 def color_correction():
     img = cv2.imread('photos/scale.jpg')
@@ -58,12 +59,21 @@ def prompts():
 #prompts()
 
 def colorDetection():
-    my_car = ColorDetect('photos/blue shirt.jpg')
-    monochromatic, gray, segmented, mask = my_car.get_segmented_image(lower_bound=(0, 70, 0), upper_bound=(80, 255, 255))
-    cv2.imshow('Segmented', segmented)
-    cv2.imshow('monochromatic', monochromatic)
+    image = cv2.imread('photos/scale.jpg')
+    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    blur = cv2.medianBlur(hsv, 11)
+
+    red_lower_rang = np.array([0, 100, 0])
+    red_upper_range = np.array([17, 255, 255])
+
+    lower = np.array([0, 100, 223])
+    upper = np.array([45, 255, 255])
+
+    mask = cv2.inRange(blur, lower, upper)
+    res = cv2.bitwise_and(image, image, mask=mask)
+
+    cv2.imshow("mask ", mask)
+    cv2.imshow('stack', np.hstack([image, res]))
     cv2.waitKey(0)
-    cv2.destroyAllWindows()
-   # cv2.wait(0)
 
 colorDetection()
